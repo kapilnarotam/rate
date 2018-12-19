@@ -28,32 +28,32 @@ rcurrencies = hcurrencies.reverse
   <table class="table">
     <tbody>
 <%
-    hmarkets.each do |doc| %>
+    5.times do |i| %>
     <tr>
-        <td> <% if doc["base_currency_id"] < doc["quoted_currency_id"] %>
+        <td> <% if hmarkets[i]["base_currency_id"] < hmarkets[i]["quoted_currency_id"] %>
           <% hcurrencies.each do |curr| %>
-            <% if curr["id"] == doc["base_currency_id"] %>
+            <% if curr["id"] == hmarkets[i]["base_currency_id"] %>
             <%= curr["currency_name"] %> /
             <% end %>
-            <% if curr["id"] == doc["quoted_currency_id"] %>
+            <% if curr["id"] == hmarkets[i]["quoted_currency_id"] %>
             <%= curr["currency_name"] %>
             <% end %>
           <% end %>
           <% end %>
 
-<% if doc["base_currency_id"] > doc["quoted_currency_id"] %>
+<% if hmarkets[i]["base_currency_id"] > hmarkets[i]["quoted_currency_id"] %>
     <% rcurrencies.each do |rcurr| %>
-        <% if rcurr["id"] == doc["base_currency_id"] %>
+        <% if rcurr["id"] == hmarkets[i]["base_currency_id"] %>
           <%= rcurr["currency_name"] %> /
           <% end %>
-          <% if rcurr["id"] == doc["quoted_currency_id"] %>
+          <% if rcurr["id"] == hmarkets[i]["quoted_currency_id"] %>
             <%= rcurr["currency_name"] %>
           <% end %>
           <% end %>
           <% end %>
         </td>
         <td><% hrates.each do |rate| %>
-                <% if rate["market_id"] == doc["id"] %>
+                <% if rate["market_id"] == hmarkets[i]["id"] %>
                     <%= rate["price"] %>%
                 <% end %>
             <% end %>
@@ -63,12 +63,3 @@ rcurrencies = hcurrencies.reverse
     </tbody>
   </table>
 </div>
-
-
-
-<p> <%= hmarkets %> </p>
-<p> <%= hcurrencies %> </p>
-<p> <%= hrates %> </p>
-
-
-<p> <%= rcurrencies %> </p>
