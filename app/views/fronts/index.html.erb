@@ -1,0 +1,49 @@
+
+<p id="notice"><%= notice %></p>
+<% require 'net/http'
+require 'json'
+
+url = 'http://localhost:3000/markets'
+uri = URI(url)
+markets = Net::HTTP.get(uri)
+hmarkets = JSON.parse(markets)
+
+url = 'http://localhost:3000/rates'
+uri = URI(url)
+rates = Net::HTTP.get(uri)
+hrates = JSON.parse(rates)
+
+url = 'http://localhost:3000/currencies'
+uri = URI(url)
+currencies = Net::HTTP.get(uri)
+hcurrencies = JSON.parse(currencies)
+
+%>
+
+<div class="container">
+  <h2>Market Insights</h2>
+  <p>last updated <%= hrates[0]["updated_at"] %></p>            
+  <table class="table">
+    <tbody>
+<%
+    hmarkets.each do |doc| %>
+    <tr>
+        <td><%= doc["base_currency_id"] %>/<%= doc["quoted_currency_id"] %></td>
+    </tr>
+    <% end %>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<p> <%= hmarkets %> </p>
+<p> <%= hcurrencies %> </p>
+<p> <%= hrates %> </p>
