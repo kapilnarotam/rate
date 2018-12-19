@@ -18,6 +18,8 @@ uri = URI(url)
 currencies = Net::HTTP.get(uri)
 hcurrencies = JSON.parse(currencies)
 
+rcurrencies = hcurrencies.reverse
+
 %>
 
 <div class="container">
@@ -28,7 +30,36 @@ hcurrencies = JSON.parse(currencies)
 <%
     hmarkets.each do |doc| %>
     <tr>
-        <td><%= doc["base_currency_id"] %>/<%= doc["quoted_currency_id"] %></td>
+        <td> <% if doc["base_currency_id"] < doc["quoted_currency_id"] %>
+          <% hcurrencies.each do |curr| %>
+            <% if curr["id"] == doc["base_currency_id"] %>
+            <%= curr["currency_name"] %> /
+            <% end %>
+            <% if curr["id"] == doc["quoted_currency_id"] %>
+            <%= curr["currency_name"] %>
+            <% end %>
+          <% end %>
+          <% end %>
+
+          <% if doc["base_currency_id"] > doc["quoted_currency_id"] %>
+          <% rcurrencies.each do |curr2| %>
+            <% if curr2["id"] == doc["base_currency_id"] %>
+            <%= curr2["currency_name"] %> /
+            <% end %>
+            <% hcurrencies.each do |curr3| %>
+            <% if curr3["id"] == doc["qouted_currency_id"] %>
+            <%= curr3["currency_name"] %> /
+            <% end %>
+          <% end %>
+          <% end %>
+          <% end %>
+        </td>
+        <td><% hrates.each do |rate| %>
+                <% if rate["market_id"] == doc["id"] %>
+                    <%= rate["price"] %>%
+                <% end %>
+            <% end %>
+        </td>
     </tr>
     <% end %>
       <tr>
@@ -47,3 +78,6 @@ hcurrencies = JSON.parse(currencies)
 <p> <%= hmarkets %> </p>
 <p> <%= hcurrencies %> </p>
 <p> <%= hrates %> </p>
+
+
+<p> <%= rcurrencies %> </p>
