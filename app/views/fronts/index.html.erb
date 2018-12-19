@@ -41,15 +41,13 @@ rcurrencies = hcurrencies.reverse
           <% end %>
           <% end %>
 
-          <% if doc["base_currency_id"] > doc["quoted_currency_id"] %>
-          <% rcurrencies.each do |curr2| %>
-            <% if curr2["id"] == doc["base_currency_id"] %>
-            <%= curr2["currency_name"] %> /
-            <% end %>
-            <% hcurrencies.each do |curr3| %>
-            <% if curr3["id"] == doc["qouted_currency_id"] %>
-            <%= curr3["currency_name"] %> /
-            <% end %>
+<% if doc["base_currency_id"] > doc["quoted_currency_id"] %>
+    <% rcurrencies.each do |rcurr| %>
+        <% if rcurr["id"] == doc["base_currency_id"] %>
+          <%= rcurr["currency_name"] %> /
+          <% end %>
+          <% if rcurr["id"] == doc["quoted_currency_id"] %>
+            <%= rcurr["currency_name"] %>
           <% end %>
           <% end %>
           <% end %>
@@ -62,13 +60,6 @@ rcurrencies = hcurrencies.reverse
         </td>
     </tr>
     <% end %>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-      </tr>
     </tbody>
   </table>
 </div>
