@@ -27,8 +27,7 @@ rcurrencies = hcurrencies.reverse
   <p>last updated <%= hrates[0]["updated_at"] %></p>            
   <table class="table">
     <tbody>
-<%
-    hmarkets.each do |mar| %>
+<%hmarkets.each do |mar| %>
     <tr>
         <td><strong> <% if mar["base_currency_id"] < mar["quoted_currency_id"] %>
           <% hcurrencies.each do |curr| %>
