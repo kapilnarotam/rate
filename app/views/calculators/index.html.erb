@@ -22,27 +22,64 @@ rcurrencies = hcurrencies.reverse
 %>
 
 <h1>Calculator</h1>
-<p>Base Currency </p>
+<p>Currency </p>
 <form onchange="myFunction()">
-  <select id="one">
+  <select id="market">
     <%hmarkets.each do |mar| %>
     <option>
-        <% render 'application/renderMarketNames' %>
+        <% if mar["base_currency_id"] < mar["quoted_currency_id"] %>
+          <% hcurrencies.each do |curr| %>
+            <% if curr["id"] == mar["base_currency_id"] %>
+            <%= curr["currency_name"] %> /
+            <% end %>
+            <% if curr["id"] == mar["quoted_currency_id"] %>
+            <%= curr["currency_name"] %>
+            <% end %>
+          <% end %>
+          <% end %>
+
+<% if mar["base_currency_id"] > mar["quoted_currency_id"] %>
+    <% rcurrencies.each do |rcurr| %>
+        <% if rcurr["id"] == mar["base_currency_id"] %>
+          <%= rcurr["currency_name"] %> /
+          <% end %>
+          <% if rcurr["id"] == mar["quoted_currency_id"] %>
+            <%= rcurr["currency_name"] %>
+          <% end %>
+          <% end %>
+          <% end %>
     </option>
     <% end %>
-      </select><input type="text" name="bcurrency" id="bcurr" ><br>
-      <p>Quoted Currency</p>
-      <input type="text" name="qcurrency" id="qcurr" ><br>
+      </select>
+      <p id="bc"></p>
+      <br><input type="text" name="bcurrency" id="bcurr" >
+      <br>
+      <br>
+      <p id="qc"></p>
+      <input type="text" name="qcurrency" id="qcurr" >
     </form>
 
 <button onclick="myFunction()">Try it</button>
 
 <p id="demo"></p>
 
+
+
 <script>
 function myFunction() {
-  var x = document.getElementById("one");
 
-  document.getElementById("demo").innerHTML = x.value;
+  var y = <%= hrates[0]["price"] %>;
+  var x = (document.getElementById("market").value).split(" / ");
+  var bc_id = x[0];
+  var qc_id = x[1];
+  <%hcurrencies.each do |cur| %>
+  <% if cur["currency_name"] == bc_id %>
+  <%= document.getElementById("qcurr").value = cur["id"]; %>
+    <% end %>
+    <% end %>
+
+  document.getElementById("bcurr").value = x;
+  document.getElementById("bc").innerHTML = bc_id;
+  document.getElementById("qc").innerHTML = qc_id;
 }
 </script>
