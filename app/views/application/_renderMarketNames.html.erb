@@ -1,0 +1,21 @@
+<% if mar["base_currency_id"] < mar["quoted_currency_id"] %>
+          <% hcurrencies.each do |curr| %>
+            <% if curr["id"] == mar["base_currency_id"] %>
+            <%= curr["currency_name"] %> /
+            <% end %>
+            <% if curr["id"] == mar["quoted_currency_id"] %>
+            <%= curr["currency_name"] %>
+            <% end %>
+          <% end %>
+          <% end %>
+
+<% if mar["base_currency_id"] > mar["quoted_currency_id"] %>
+    <% rcurrencies.each do |rcurr| %>
+        <% if rcurr["id"] == mar["base_currency_id"] %>
+          <%= rcurr["currency_name"] %> /
+          <% end %>
+          <% if rcurr["id"] == mar["quoted_currency_id"] %>
+            <%= rcurr["currency_name"] %>
+          <% end %>
+          <% end %>
+          <% end %>
