@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181219215748) do
+ActiveRecord::Schema.define(version: 20181220093028) do
+
+  create_table "calculators", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "fronts", force: :cascade do |t|
     t.datetime "created_at", null: false

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :calculators
   resources :rats
 	root 'fronts#index'
   resources :fronts
