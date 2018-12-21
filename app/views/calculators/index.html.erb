@@ -1,3 +1,12 @@
+<script
+  src="https://code.jquery.com/jquery-3.3.1.slim.js"
+  integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
+  crossorigin="anonymous"></script>
+
+  <script>$(document).ready(function(){
+    myFunction();
+  });</script>
+
 <p id="notice"><%= notice %></p>
 <% require 'net/http'
 require 'json'
@@ -52,35 +61,22 @@ rcurrencies = hcurrencies.reverse
     <% end %>
       </select>
       <p id="bc"></p>
-      <br><input type="text" name="bcurrency" id="bcurr" >
+      <br><input type="number" name="bcurrency" value="1" id="bcurr" oninput="basec()">
       <br>
       <br>
       <p id="qc"></p>
-      <input type="text" name="qcurrency" id="qcurr" >
+      <input type="number" name="qcurrency" id="qcurr"  oninput="quoted()">
     </form>
 
-<button onclick="myFunction()">Try it</button>
-
-<p id="demo"></p>
-<p id="demo2">ruby</p>
-<p id="demo1"></p>
-<p id="demo3"></p>
-
-
-
 <script>
-function myFunction() {
   var rate;
-
+function myFunction() {
   var x = (document.getElementById("market").value).split(" / ");
   var bc_id = x[0];
   var qc_id = x[1];
   document.getElementById("bc").innerHTML = bc_id;
   document.getElementById("qc").innerHTML = qc_id;
 
-  var qamount = parseFloat(document.getElementById("qcurr").value);
-  var bamount = parseFloat(document.getElementById("bcurr").value);
-  
 
   var request = new XMLHttpRequest();
 
@@ -138,22 +134,25 @@ request3.onload = function () {
         }
       }
       rate = rate/100 + 1;
-      qamount = bamount * rate;
-      document.getElementById("qcurr").value = qamount;
-
-      bamount = qamount / rate;
-      document.getElementById("bcurr").value = bamount;
-
-  }  
-
-  };
+      basec();
+      }
+  }
 
   request3.send();
-};
-
+}
 request2.send();
-  };
+  }
 
 request.send();
-};
+}
+function basec(){
+      var bamount = document.getElementById("bcurr").value;
+      var amount = bamount * rate;
+      document.getElementById("qcurr").value = amount;}
+
+
+      function quoted(){
+        var qamount = document.getElementById("qcurr").value;
+        var amount = qamount / rate;
+      document.getElementById("bcurr").value = amount;}  
   </script>
