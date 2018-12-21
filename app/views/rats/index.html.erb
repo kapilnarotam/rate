@@ -1,7 +1,9 @@
 
 <p id="notice"><%= notice %></p>
-<% require 'net/http'
+<%
+require 'net/http'
 require 'json'
+require 'date'
 
 url = 'http://localhost:3000/markets'
 uri = URI(url)
@@ -19,7 +21,6 @@ currencies = Net::HTTP.get(uri)
 hcurrencies = JSON.parse(currencies)
 
 rcurrencies = hcurrencies.reverse
-
 %>
 
 <div class="container">

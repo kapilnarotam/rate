@@ -8,7 +8,9 @@
   });</script>
 
 <p id="notice"><%= notice %></p>
-<% require 'net/http'
+
+<%
+require 'net/http'
 require 'json'
 
 url = 'http://localhost:3000/markets'
@@ -27,7 +29,6 @@ currencies = Net::HTTP.get(uri)
 hcurrencies = JSON.parse(currencies)
 
 rcurrencies = hcurrencies.reverse
-
 %>
 
 <h2 align="center">Calculator</h2>
