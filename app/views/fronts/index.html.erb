@@ -23,13 +23,13 @@ rcurrencies = hcurrencies.reverse
 %>
 
 <div class="container">
-  <h2>Market Insights</h2>
-  <p>last updated <%= hrates[0]["updated_at"] %></p>            
+  <h2 align="center">Market Insights</h2>
+  <p align="center">last updated <%= hrates[0]["updated_at"] %></p>            
   <table class="table">
     <tbody>
 <%
     5.times do |i| %>
-    <tr>
+    <tr class="text-center">
         <td><strong> <% if hmarkets[i]["base_currency_id"] < hmarkets[i]["quoted_currency_id"] %>
           <% hcurrencies.each do |curr| %>
             <% if curr["id"] == hmarkets[i]["base_currency_id"] %>
