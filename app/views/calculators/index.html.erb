@@ -59,7 +59,7 @@ rcurrencies = hcurrencies.reverse
       <input type="text" name="qcurrency" id="qcurr" >
     </form>
 
-<button onclick="myFunction()">Try it</button>
+<button onclick="function()">Try it</button>
 
 <p id="demo"></p>
 
@@ -72,14 +72,31 @@ function myFunction() {
   var x = (document.getElementById("market").value).split(" / ");
   var bc_id = x[0];
   var qc_id = x[1];
-  <%hcurrencies.each do |cur| %>
-  <% if cur["currency_name"] == bc_id %>
-  <%= document.getElementById("qcurr").value = cur["id"]; %>
-    <% end %>
-    <% end %>
+ 
 
   document.getElementById("bcurr").value = x;
   document.getElementById("bc").innerHTML = bc_id;
   document.getElementById("qc").innerHTML = qc_id;
 }
+</script>
+
+
+<script>
+
+var request = new XMLHttpRequest();
+
+request.open('GET', 'http://localhost:3000/currencies', true);
+request.onload = function () {
+
+  // Begin accessing JSON data here
+  var data = JSON.parse(this.response);
+  var obj = JSON.stringify(data);
+
+  if (request.status >= 200 && request.status < 400) {
+    document.getElementById("demo").innerHTML = obj;
+    };
+  };
+
+request.send();
+
 </script>
