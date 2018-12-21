@@ -2,6 +2,7 @@
 <p id="notice"><%= notice %></p>
 <% require 'net/http'
 require 'json'
+require 'date'
 
 url = 'http://localhost:3000/markets'
 uri = URI(url)
@@ -24,7 +25,7 @@ rcurrencies = hcurrencies.reverse
 
 <div class="container">
   <h2 align="center">Market Insights</h2>
-  <p align="center">last updated <%= hrates[0]["updated_at"] %></p>            
+  <p align="center">last updated <%= Time.parse(hrates[0]["updated_at"]).utc %></p>            
   <table class="table">
     <tbody>
 <%

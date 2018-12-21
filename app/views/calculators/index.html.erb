@@ -33,8 +33,8 @@ rcurrencies = hcurrencies.reverse
 <h2 align="center">Calculator</h2>
 
 <form onchange="myFunction()">
-  <div class="form-group">
-    <label class="text-left">Currency </label>
+  <div class="form-group, text-left">
+    <label>Currency </label>
   <select id="market" class="form-control">
     <%hmarkets.each do |mar| %>
     <option>
@@ -63,12 +63,12 @@ rcurrencies = hcurrencies.reverse
     <% end %>
       </select>
     </div>
-    <div class="form-group">
-      <label id="bc" class="text-left"></label>
+    <div class="form-group, text-left">
+      <label id="bc"></label>
       <input type="number" class="form-control" name="bcurrency" value="1" id="bcurr" oninput="basec()">
     </div>
-      <div class="form-group">
-      <label id="qc" class="text-left"></label>
+      <div class="form-group, text-left">
+      <label id="qc"></label>
       <input type="number" class="form-control" name="qcurrency" id="qcurr"  oninput="quoted()">
     </div>
     </form>
