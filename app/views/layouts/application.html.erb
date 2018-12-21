@@ -21,8 +21,16 @@
     </li>
   </ul>
 </nav>
-	<div class="container">
+	<div class="container" align="center">
     	<%= yield %>
 	</div>
   </body>
+  <footer>
+    <div class="container" align="right">
+      <br>
+      
+      <br>
+<%= link_to "Rates", fronts_path %> | <%= link_to "Calculator", calculators_path %> | <%= link_to "FAQs", faqs_path %>
+    </div>
+  </footer>
 </html>
