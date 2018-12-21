@@ -70,16 +70,17 @@ rcurrencies = hcurrencies.reverse
 
 <script>
 function myFunction() {
+  var rate;
 
-  var y = <%= hrates[0]["price"] %>;
   var x = (document.getElementById("market").value).split(" / ");
   var bc_id = x[0];
   var qc_id = x[1];
- 
-
-  document.getElementById("bcurr").value = x;
   document.getElementById("bc").innerHTML = bc_id;
   document.getElementById("qc").innerHTML = qc_id;
+
+  var qamount = parseFloat(document.getElementById("qcurr").value);
+  var bamount = parseFloat(document.getElementById("bcurr").value);
+  
 
   var request = new XMLHttpRequest();
 
@@ -88,20 +89,15 @@ function myFunction() {
 
   // Begin accessing JSON data here
   var cdata = JSON.parse(this.response);
-  var obj = JSON.stringify(cdata);
 
-  document.getElementById("demo").innerHTML = obj;
+  var request2 = new XMLHttpRequest();
 
-  var requestt = new XMLHttpRequest();
+  request2.open('GET', 'http://localhost:3000/rates', true);
+  request2.onload = function () {
 
-requestt.open('GET', 'http://localhost:3000/rates', true);
-requestt.onload = function () {
 
   // Begin accessing JSON data here
   var rdata = JSON.parse(this.response);
-  var obj1 = JSON.stringify(rdata);
-  document.getElementById("demo1").innerHTML = obj1;
-
 
   var request3 = new XMLHttpRequest();
 
@@ -110,25 +106,21 @@ request3.onload = function () {
 
   // Begin accessing JSON data here
   var mdata = JSON.parse(this.response);
-  var obj2 = JSON.stringify(mdata);
-  document.getElementById("demo3").innerHTML = obj2;
-
 
 
   cdata.forEach(getcid);
   var bid;
   var qid;
   var mid;
-  var rate;
+  
+
 
   function getcid(cobj){
     if (cobj["currency_name"] == x[0]){
       bid = cobj["id"];
-      //document.getElementById("qcurr").value = bid;
     }
     if (cobj["currency_name"] == x[1]){
       qid = cobj["id"];
-      //document.getElementById("qcurr").value = qid;
     }
 
   }
@@ -145,21 +137,21 @@ request3.onload = function () {
           rate = robj["price"];
         }
       }
-      document.getElementById("qcurr").value = rate;
+      rate = rate/100 + 1;
+      qamount = bamount * rate;
+      document.getElementById("qcurr").value = qamount;
 
-  }
-    
+      bamount = qamount / rate;
+      document.getElementById("bcurr").value = bamount;
 
-
-  var t = rdata[0]["id"] + cdata[0]["id"] + x[0];
-  document.getElementById("demo2").innerHTML = t;
+  }  
 
   };
 
   request3.send();
 };
 
-requestt.send();
+request2.send();
   };
 
 request.send();
