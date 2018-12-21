@@ -59,9 +59,12 @@ rcurrencies = hcurrencies.reverse
       <input type="text" name="qcurrency" id="qcurr" >
     </form>
 
-<button onclick="function()">Try it</button>
+<button onclick="myFunction()">Try it</button>
 
 <p id="demo"></p>
+<p id="demo2">ruby</p>
+<p id="demo1"></p>
+<p id="demo3"></p>
 
 
 
@@ -77,26 +80,88 @@ function myFunction() {
   document.getElementById("bcurr").value = x;
   document.getElementById("bc").innerHTML = bc_id;
   document.getElementById("qc").innerHTML = qc_id;
-}
-</script>
 
+  var request = new XMLHttpRequest();
 
-<script>
-
-var request = new XMLHttpRequest();
-
-request.open('GET', 'http://localhost:3000/currencies', true);
-request.onload = function () {
+  request.open('GET', 'http://localhost:3000/currencies', true);
+  request.onload = function () {
 
   // Begin accessing JSON data here
-  var data = JSON.parse(this.response);
-  var obj = JSON.stringify(data);
+  var cdata = JSON.parse(this.response);
+  var obj = JSON.stringify(cdata);
 
-  if (request.status >= 200 && request.status < 400) {
-    document.getElementById("demo").innerHTML = obj;
-    };
+  document.getElementById("demo").innerHTML = obj;
+
+  var requestt = new XMLHttpRequest();
+
+requestt.open('GET', 'http://localhost:3000/rates', true);
+requestt.onload = function () {
+
+  // Begin accessing JSON data here
+  var rdata = JSON.parse(this.response);
+  var obj1 = JSON.stringify(rdata);
+  document.getElementById("demo1").innerHTML = obj1;
+
+
+  var request3 = new XMLHttpRequest();
+
+request3.open('GET', 'http://localhost:3000/markets', true);
+request3.onload = function () {
+
+  // Begin accessing JSON data here
+  var mdata = JSON.parse(this.response);
+  var obj2 = JSON.stringify(mdata);
+  document.getElementById("demo3").innerHTML = obj2;
+
+
+
+  cdata.forEach(getcid);
+  var bid;
+  var qid;
+  var mid;
+  var rate;
+
+  function getcid(cobj){
+    if (cobj["currency_name"] == x[0]){
+      bid = cobj["id"];
+      //document.getElementById("qcurr").value = bid;
+    }
+    if (cobj["currency_name"] == x[1]){
+      qid = cobj["id"];
+      //document.getElementById("qcurr").value = qid;
+    }
+
+  }
+      mdata.forEach(getmid);
+    function getmid(mobj){
+      if ((mobj["base_currency_id"] == bid) && (mobj["quoted_currency_id"] == qid)){
+        mid = mobj["id"];
+      }
+
+
+      rdata.forEach(getrate);
+      function getrate(robj){
+        if (robj["market_id"] == mid){
+          rate = robj["price"];
+        }
+      }
+      document.getElementById("qcurr").value = rate;
+
+  }
+    
+
+
+  var t = rdata[0]["id"] + cdata[0]["id"] + x[0];
+  document.getElementById("demo2").innerHTML = t;
+
+  };
+
+  request3.send();
+};
+
+requestt.send();
   };
 
 request.send();
-
-</script>
+};
+  </script>
