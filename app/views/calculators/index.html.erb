@@ -13,17 +13,19 @@
 require 'net/http'
 require 'json'
 
-url = 'http://localhost:3000/markets'
+baseURL = render 'application/jsonHTTP'
+
+url = baseURL + '/markets'
 uri = URI(url)
 markets = Net::HTTP.get(uri)
 hmarkets = JSON.parse(markets)
 
-url = 'http://localhost:3000/rates'
+url = baseURL + '/rates'
 uri = URI(url)
 rates = Net::HTTP.get(uri)
 hrates = JSON.parse(rates)
 
-url = 'http://localhost:3000/currencies'
+url = baseURL + '/currencies'
 uri = URI(url)
 currencies = Net::HTTP.get(uri)
 hcurrencies = JSON.parse(currencies)
@@ -74,8 +76,12 @@ rcurrencies = hcurrencies.reverse
     </div>
     </form>
 
+    <p id='jsurl' hidden><%= render 'application/jsonHTTP' %></p>
+
 <script>
   var rate;
+  var url = document.getElementById("jsurl").innerHTML
+
 function myFunction() {
   var x = (document.getElementById("market").value).split(" / ");
   var bc_id = x[0];
@@ -86,7 +92,7 @@ function myFunction() {
 
   var request = new XMLHttpRequest();
 
-  request.open('GET', 'http://localhost:3000/currencies', true);
+  request.open('GET', url.concat("/currencies") , true);
   request.onload = function () {
 
   // Begin accessing JSON data here
@@ -94,7 +100,7 @@ function myFunction() {
 
   var request2 = new XMLHttpRequest();
 
-  request2.open('GET', 'http://localhost:3000/rates', true);
+  request2.open('GET', url.concat("/rates"), true);
   request2.onload = function () {
 
 
@@ -103,7 +109,7 @@ function myFunction() {
 
   var request3 = new XMLHttpRequest();
 
-request3.open('GET', 'http://localhost:3000/markets', true);
+request3.open('GET', url.concat("/markets"), true);
 request3.onload = function () {
 
   // Begin accessing JSON data here

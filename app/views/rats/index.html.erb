@@ -5,17 +5,19 @@ require 'net/http'
 require 'json'
 require 'date'
 
-url = 'http://localhost:3000/markets'
+baseURL = render 'application/jsonHTTP'
+
+url = baseURL + '/markets'
 uri = URI(url)
 markets = Net::HTTP.get(uri)
 hmarkets = JSON.parse(markets)
 
-url = 'http://localhost:3000/rates'
+url = baseURL + '/rates'
 uri = URI(url)
 rates = Net::HTTP.get(uri)
 hrates = JSON.parse(rates)
 
-url = 'http://localhost:3000/currencies'
+url = baseURL + '/currencies'
 uri = URI(url)
 currencies = Net::HTTP.get(uri)
 hcurrencies = JSON.parse(currencies)
